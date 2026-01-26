@@ -89,8 +89,51 @@
     
     </div>
 
+
 <!-- Expense Container -->
-    <div>
+    <div id="expense-container">
+        <h2>Expense Tracker</h2>
+        <div class="expense-columns">
+            
+            <!-- Fixed Column -->
+            <div class="expense-category">
+                <div class="category-header">
+                    <h3>Fixed</h3>
+                    <button class="btn-new">New Transaction</button>
+                </div>
+                <!-- Example Transaction Card -->
+                <div class="transaction-card">
+                    <div class="transaction-details">
+                        <h4 class="transaction-title">Mortgage</h4>
+                        <span class="transaction-amount">$1200.00</span>
+                    </div>
+                    <div class="transaction-actions">
+                        <button class="btn-edit">Edit</button>
+                        <button class="btn-delete">Delete</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fun Column -->
+            <div class="expense-category">
+                <div class="category-header">
+                    <h3>Fun</h3>
+                    <button class="btn-new">New Transaction</button>
+                </div>
+                <!-- Future transactions go here -->
+            </div>
+
+            <!-- Future Column -->
+            <div class="expense-category">
+                <div class="category-header">
+                    <h3>Future</h3>
+                    <button class="btn-new">New Transaction</button>
+                </div>
+                <!-- Future transactions go here -->
+            </div>
+
+        </div>
+    </div>
     </main>
 </body>
 </html>
