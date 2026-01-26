@@ -17,6 +17,9 @@
 
 <!-- Income Container -->
     <main>
+<!-- Top Row: Income and Visualisation -->
+    <div class="top-row">
+
     <div id="income-summary" class="card">
         <h3>Income Summary</h3>
         <div class="income-row">
@@ -41,11 +44,49 @@
     </div>
 
 <!-- Data Visualisation Container -->
-    <div>
-        <h2>Data Visualisation</h2>
-        <div>
-            <img src="income-chart.png" alt="Income Chart">
+    <div id="visualisation-container" class="card">
+        <h2>Actual vs Target Expenditure</h2>
+        <div class="chart-container">
+            
+            <!-- Fixed Expenses -->
+            <div class="chart-item">
+                <div class="chart-header">
+                    <span>Fixed</span>
+                    <span>Target: 50%</span>
+                </div>
+                <div class="chart-track">
+                    <div class="chart-bar bar-fixed" style="width: 45%;"></div> <!-- Example: 45% spent -->
+                    <div class="target-line" style="left: 50%;"></div>
+                </div>
+            </div>
+
+            <!-- Fun Expenses -->
+            <div class="chart-item">
+                <div class="chart-header">
+                    <span>Fun</span>
+                    <span>Target: 30%</span>
+                </div>
+                <div class="chart-track">
+                    <div class="chart-bar bar-fun" style="width: 35%;"></div> <!-- Example: 35% spent -->
+                    <div class="target-line" style="left: 30%;"></div>
+                </div>
+            </div>
+
+            <!-- Future Expenses -->
+            <div class="chart-item">
+                <div class="chart-header">
+                    <span>Future</span>
+                    <span>Target: 20%</span>
+                </div>
+                <div class="chart-track">
+                    <div class="chart-bar bar-future" style="width: 15%;"></div> <!-- Example: 15% saved -->
+                    <div class="target-line" style="left: 20%;"></div>
+                </div>
+            </div>
+
         </div>
+    </div>
+    
     </div>
 
 <!-- Expense Container -->

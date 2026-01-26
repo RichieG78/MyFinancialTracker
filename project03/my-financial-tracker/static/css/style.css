@@ -30,6 +30,13 @@ main {
     background-color: #f9f9f9;
 }
 
+/* Layout Containers */
+.top-row {
+    display: flex;
+    gap: 20px; /* Space between the two cards */
+    margin-bottom: 20px;
+}
+
 /* Card Styling */
 .card {
     background-color: white;
@@ -38,7 +45,15 @@ main {
     padding: 20px;
     margin-bottom: 20px;
     width: 100%;
-    max-width: 400px; /* Looks better as a constrained card */
+    /* Default max-width for standalone cards, overridden in top-row */
+    max-width: 400px; 
+}
+
+/* Ensure cards in the top row share space equally */
+.top-row .card {
+    flex: 1;
+    max-width: none;
+    margin-bottom: 0;
 }
 
 /* Income Summary Specifics */
@@ -67,3 +82,53 @@ main {
     border-top: 2px solid #ddd;
     padding-top: 15px;
 }
+
+/* Data Visualisation Graphs */
+.chart-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.chart-item {
+    width: 100%;
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+.chart-track {
+    position: relative;
+    background-color: #eee;
+    height: 25px;
+    border-radius: 4px;
+    overflow: hidden; /* Keeps the actual bar inside rounded corners */
+}
+
+.chart-bar {
+    height: 100%;
+    /* Default color, overridden by specific classes */
+    background-color: #ccc;
+    transition: width 0.5s ease-in-out;
+}
+
+/* Target Line Marker */
+.target-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #000;
+    z-index: 10;
+    /* To make it standout more, maybe a dashed border or just solid black */
+}
+
+/* Colors for specific graphs */
+.bar-fixed { background-color: #3498db; } /* Blue */
+.bar-fun { background-color: #9b59b6; }   /* Purple */
+.bar-future { background-color: #2ecc71; } /* Green */
+
