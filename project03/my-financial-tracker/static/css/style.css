@@ -24,6 +24,12 @@ nav a:hover {
     text-decoration: underline;
 }
 
+nav a.active {
+    font-weight: bold;
+    text-decoration: underline;
+    color: #4CAF50; /* Or any highlight color you prefer */
+}
+
 main {
     flex: 1;
     padding: 20px;

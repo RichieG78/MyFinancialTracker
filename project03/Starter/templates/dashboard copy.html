@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Financial Tracker</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
 <!-- Side Navigation -->
     <nav><aside>
         <h2>My Financial Tracker</h2>
         <ul>
-            <li><a href="{{ url_for('index') }}" class="active">Dashboard</a></li>
-            <li><a href="{{ url_for('add_income') }}">Add Income</a></li>
-            <li><a href="{{ url_for('add_expense') }}">Add Expense</a></li>
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="add-income.html">Add Income</a></li>
+            <li><a href="add-expense.html">Add Expense</a></li>
     </aside></nav>
 
 <!-- Income Container -->
@@ -24,7 +24,7 @@
     <div id="income-summary" class="card">
         <div class="income-header">
             <h3>Income Summary</h3>
-            <a href="{{ url_for('add_income') }}"><button class="btn-new">Add Income</button></a>
+            <button class="btn-new">Add Income</button>
         </div>
 
         <div class="income-row">
