@@ -29,22 +29,20 @@
 
         <div class="income-row">
             <span class="label">Primary Income</span>
-            <span class="amount">$5000</span>
+            {% set primary_income = incomes | selectattr("type", "equalto", "primary") | list | last %}
+            <span class="amount">${{ "%.2f"|format(primary_income.amount) if primary_income else "0.00" }}</span>
         </div>
 
+        {% for income in incomes if income.type == 'other' %}
         <div class="income-row">
-            <span class="label">Other Income 1</span>
-            <span class="amount">$1500</span>
+            <span class="label">{{ income.description }}</span>
+            <span class="amount">${{ "%.2f"|format(income.amount) }}</span>
         </div>
-
-        <div class="income-row">
-            <span class="label">Total Income 2</span>
-            <span class="amount">$2500</span>
-        </div>
+        {% endfor %}
 
         <div class="income-row total-row">
             <span class="label">Total Income</span>
-            <span class="amount">$9000</span>
+            <span class="amount">${{ "%.2f"|format(incomes | sum(attribute='amount')) }}</span>
         </div>
     </div>
 
@@ -99,7 +97,7 @@
     <div id="expense-container">
         <div class="expense-header">
             <h2>Expense Tracker</h2>
-            <button class="btn-new">Add Expense</button>
+            <a href="{{ url_for('add_expense') }}"><button class="btn-new">Add Expense</button></a>
         </div>
         <div class="expense-columns">
             
@@ -108,16 +106,21 @@
                 <div class="category-header">
                     <h3>Fixed</h3>
                 </div>
-                <!-- Example Transaction Card -->
+                {% for expense in expenses if expense.type == 'fixed' %}
                 <div class="transaction-card">
                     <div class="transaction-details">
-                        <h4 class="transaction-title">Mortgage</h4>
-                        <span class="transaction-amount">$1200.00</span>
+                        <h4 class="transaction-title">{{ expense.description }}</h4>
+                        <span class="transaction-amount">${{ "%.2f"|format(expense.amount) }}</span>
                     </div>
                     <div class="transaction-actions">
                         <button class="btn-edit">Edit</button>
                         <button class="btn-delete">Delete</button>
                     </div>
+                </div>
+                {% endfor %}
+                <div class="total-row" style="margin-top: 15px; border-top: 2px solid #ccc; padding-top: 10px; display: flex; justify-content: space-between; font-weight: bold;">
+                    <span>Total Fixed:</span>
+                    <span>${{ "%.2f"|format(expenses | selectattr("type", "equalto", "fixed") | sum(attribute='amount')) }}</span>
                 </div>
             </div>
 
@@ -126,7 +129,22 @@
                 <div class="category-header">
                     <h3>Fun</h3>
                 </div>
-                <!-- Future transactions go here -->
+                {% for expense in expenses if expense.type == 'fun' %}
+                <div class="transaction-card">
+                    <div class="transaction-details">
+                        <h4 class="transaction-title">{{ expense.description }}</h4>
+                        <span class="transaction-amount">${{ "%.2f"|format(expense.amount) }}</span>
+                    </div>
+                    <div class="transaction-actions">
+                        <button class="btn-edit">Edit</button>
+                        <button class="btn-delete">Delete</button>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="total-row" style="margin-top: 15px; border-top: 2px solid #ccc; padding-top: 10px; display: flex; justify-content: space-between; font-weight: bold;">
+                    <span>Total Fun:</span>
+                    <span>${{ "%.2f"|format(expenses | selectattr("type", "equalto", "fun") | sum(attribute='amount')) }}</span>
+                </div>
             </div>
 
             <!-- Future Column -->
@@ -134,7 +152,22 @@
                 <div class="category-header">
                     <h3>Future</h3>
                 </div>
-                <!-- Future transactions go here -->
+                {% for expense in expenses if expense.type == 'future' %}
+                <div class="transaction-card">
+                    <div class="transaction-details">
+                        <h4 class="transaction-title">{{ expense.description }}</h4>
+                        <span class="transaction-amount">${{ "%.2f"|format(expense.amount) }}</span>
+                    </div>
+                    <div class="transaction-actions">
+                        <button class="btn-edit">Edit</button>
+                        <button class="btn-delete">Delete</button>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="total-row" style="margin-top: 15px; border-top: 2px solid #ccc; padding-top: 10px; display: flex; justify-content: space-between; font-weight: bold;">
+                    <span>Total Future:</span>
+                    <span>${{ "%.2f"|format(expenses | selectattr("type", "equalto", "future") | sum(attribute='amount')) }}</span>
+                </div>
             </div>
 
         </div>

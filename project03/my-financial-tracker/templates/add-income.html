@@ -23,10 +23,7 @@
         <div class="card">
             <h1>Add Income</h1>
             <form action="{{ url_for('add_income') }}" method="post">
-                <div class="form-group">
-                    <label for="description">Description:</label>
-                    <input type="text" id="description" name="description" required placeholder="Description of income">
-                </div>
+                <!-- Description field removed as per requirements -->
 
                 <div class="form-group">
                     <label for="amount">Amount:</label>
@@ -50,10 +47,13 @@
                             <input type="radio" id="primary" name="income_type" value="primary" checked required> 
                             Primary Income
                         </label>
+                    </div>
+                     <div class="radio-group" style="margin-top: 10px;">
                         <label class="radio-label">
                             <input type="radio" id="other" name="income_type" value="other"> 
                             Other Income
                         </label>
+                        <input type="text" name="other_description" placeholder="Description (optional)" style="width: 200px; margin-left: 10px; padding: 5px;">
                     </div>
                 </div>
 
