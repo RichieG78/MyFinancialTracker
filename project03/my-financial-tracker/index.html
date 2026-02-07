@@ -11,8 +11,9 @@
     <nav><aside>
         <h2>My Financial Tracker</h2>
         <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="add-transaction.html">Add Transaction</a></li>
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="add-income.html">Add Income</a></li>
+            <li><a href="add-expense.html">Add Expense</a></li>
     </aside></nav>
 
 <!-- Income Container -->
@@ -21,7 +22,11 @@
     <div class="top-row">
 
     <div id="income-summary" class="card">
-        <h3>Income Summary</h3>
+        <div class="income-header">
+            <h3>Income Summary</h3>
+            <button class="btn-new">Add Income</button>
+        </div>
+
         <div class="income-row">
             <span class="label">Primary Income</span>
             <span class="amount">$5000</span>
@@ -92,14 +97,16 @@
 
 <!-- Expense Container -->
     <div id="expense-container">
-        <h2>Expense Tracker</h2>
+        <div class="expense-header">
+            <h2>Expense Tracker</h2>
+            <button class="btn-new">Add Expense</button>
+        </div>
         <div class="expense-columns">
             
             <!-- Fixed Column -->
             <div class="expense-category">
                 <div class="category-header">
                     <h3>Fixed</h3>
-                    <button class="btn-new">New Transaction</button>
                 </div>
                 <!-- Example Transaction Card -->
                 <div class="transaction-card">
@@ -118,7 +125,6 @@
             <div class="expense-category">
                 <div class="category-header">
                     <h3>Fun</h3>
-                    <button class="btn-new">New Transaction</button>
                 </div>
                 <!-- Future transactions go here -->
             </div>
@@ -127,7 +133,6 @@
             <div class="expense-category">
                 <div class="category-header">
                     <h3>Future</h3>
-                    <button class="btn-new">New Transaction</button>
                 </div>
                 <!-- Future transactions go here -->
             </div>

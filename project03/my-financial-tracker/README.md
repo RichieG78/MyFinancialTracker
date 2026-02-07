@@ -19,7 +19,7 @@ The core concept of the application is based on an intentional budgeting framewo
 
 The application allows users to record income and expenses, automatically calculate how spending is distributed across these categories, and visually compare the **target percentages** against the **actual percentages** being spent.
 
-The project was created specifically to demonstrate a strong understanding of **Flask application structure**, **object-oriented Python**, and the **integration of HTML, CSS, and JavaScript** in line with the Python assignment brief fileciteturn1file0.
+The project was created specifically to demonstrate a strong understanding of **Flask application structure**, **object-oriented Python**, and the **integration of HTML, CSS, and JavaScript** in line with the Python assignment brief.
 
 ---
 
