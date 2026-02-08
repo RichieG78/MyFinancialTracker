@@ -52,12 +52,10 @@ This research influenced several design decisions, including:
 These design choices ensured that the application would be intuitive, visually clear, and suitable for a single-page dashboard layout.
 
 ### 1.3 Sitemap and Wireframes
-The application uses a small number of focused routes rather than a complex sitemap:
-- Dashboard
+The application uses a small number of focused routes:
+- Dashboard (Home)
 - Add Income
-- Add Spending
-- Spending Report
-- About
+- Add Expense
 
 Wireframes were created to plan the three-column dashboard layout and ensure consistent placement of totals, progress indicators, and transaction cards across screen sizes.
 
@@ -74,41 +72,42 @@ The application was built using Flask following the setup process outlined in th
 Flask is responsible for:
 - Routing
 - Rendering templates
-- Handling GET and POST requests
+- Handling GET, POST, DELETE and PUT requests
 - Passing processed data to the front-end
 
 ### 2.2 Routes
 The following routes are implemented:
 
-- `/` – Main dashboard displaying spending overview
-- `/income` – Form to add income entries (GET/POST)
-- `/spending` – Form to add spending transactions (GET/POST)
-- `/report` – Detailed breakdown of target vs actual spending
-- `/about` – Explanation of the app concept
+- `/` – Main dashboard displaying spending overview, charts and expense lists
+- `/add-income` – Form to add income entries (GET/POST)
+- `/add-expense` – Form to add spending transactions (GET/POST)
+- `/delete-expense/<expense_id>` – API endpoint to delete an expense (DELETE)
+- `/update-expense/<expense_id>` – API endpoint to update an expense description or amount (POST)
 
-These routes demonstrate the use of multiple HTTP methods and Flask’s `render_template` functionality.
+These routes demonstrate the use of multiple HTTP methods (`GET`, `POST`, `DELETE`) and Flask’s `render_template` and `jsonify` functionality.
 
 ---
 
 ## 3. Python Programming and Class Design
 
 ### 3.1 Object-Oriented Design
-The application uses **multiple custom Python classes** to model real-world financial concepts, demonstrating strong understanding of Python programming principles:
+The application uses **multiple custom Python classes** with inheritance to model real-world financial concepts, demonstrating strong understanding of Python programming principles:
 
-- `Income` – represents individual income entries
-- `Transaction` – represents individual spending items
-- `SpendingCategory` – represents Fixed, Fun, and Future categories along with their target percentages
-- `Account` – central class responsible for storing data and calculating totals
-- `SpendingReport` – responsible for comparing target and actual spending percentages
+- `Income` (Base Class)
+    - `PrimaryIncome` – Represents main salary or wages
+    - `OtherIncome` – Represents secondary or irregular income sources
+- `Expense` (Base Class)
+    - `FixedExpense` – Represents essential spending (50% target)
+    - `FunExpense` – Represents discretionary spending (30% target)
+    - `FutureExpense` – Represents savings and investments (20% target)
 
 This class-based approach improves code readability, separation of concerns, and scalability.
 
 ### 3.2 Data Processing
 All financial calculations are handled in Python, including:
-- Total income calculation
+- Total income calculation (converting different frequencies to monthly)
 - Total spending per category
-- Percentage of income spent per category
-- Difference between target and actual percentages
+- In-memory data storage using lists
 
 Only processed data is passed to the templates, ensuring that presentation logic remains separate from business logic.
 
@@ -117,14 +116,12 @@ Only processed data is passed to the templates, ensuring that presentation logic
 ## 4. HTML Structure and Content
 
 ### 4.1 Templates
-The application includes at least five HTML templates, each with a consistent structure:
-- `dashboard.html`
-- `income.html`
-- `spending.html`
-- `report.html`
-- `about.html`
+The application includes essential HTML templates, each with a consistent structure:
+- `dashboard.html` – The main interface showing charts and transaction columns
+- `add-income.html` – Form for adding new income sources
+- `add-expense.html` – Form for adding new expenses
 
-Each template includes semantic HTML elements such as `<header>`, `<main>`, and `<section>` to improve accessibility and maintainability.
+Each template includes semantic HTML elements such as `<header>`, `<main>`, and `<nav>` to improve accessibility and maintainability.
 
 ### 4.2 Dashboard Layout
 The main dashboard uses a **three-column layout**, with each column representing one spending category:
@@ -165,12 +162,13 @@ On smaller screens, the three columns stack vertically while preserving clarity 
 
 ## 6. JavaScript Interactivity
 
-JavaScript is used to enhance the user experience, including:
-- Animating progress bars based on spending percentages
-- Highlighting categories that exceed their target
-- Client-side form validation
+JavaScript is used to enhance the user experience significantly, creating a dynamic interface:
+- **Visual Charts:** `charts.js` animates progress bars and changes their color to red if spending exceeds the target percentage (50%/30%/20%).
+- **Inline Editing & Deletion:** `dashboard.js` enables users to:
+    - Edit expense descriptions and amounts directly within the dashboard cards (AJAX).
+    - Delete expenses without reloading the entire page (AJAX).
 
-These features create a more dynamic and engaging application while remaining appropriate for a Flask-based project.
+These features create a more engaging single-page application feel while remaining maintained by a Flask backend.
 
 ---
 
@@ -193,7 +191,16 @@ The hosted version mirrors the local development version and is fully functional
 
 ---
 
-## 8. Distinction-Level Features Summary
+## 8. Challenges and Design Decisions
+
+### 8.1 Routing vs Static Interfaces
+For the purpose of demonstrating Python functionality and Flask routing capabilities, the application was explicitly designed with separate routes and templates for adding income (`/add-income`) and expenses (`/add-expense`). This approach allows for clear demonstration of server-side rendering, form handling, and request processing in Python.
+
+If I were designing this application again without the specific requirement to demonstrate Python functionality, I would likely opt for a single-page application (SPA) approach or use modal dialogs on the main dashboard. This would allow users to add transactions without leaving the main view, providing a smoother user experience, though it would rely more heavily on client-side JavaScript rather than Flask's routing mechanisms.
+
+---
+
+## 9. Distinction-Level Features Summary
 
 This project meets distinction criteria by:
 - Demonstrating strong understanding of Flask routing and request handling

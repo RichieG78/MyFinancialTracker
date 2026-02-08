@@ -73,4 +73,82 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // --- Income Handlers ---
+    
+    // Handle Income Delete
+    document.querySelectorAll('.btn-delete-income').forEach(button => {
+        button.addEventListener('click', function() {
+            const row = this.closest('.income-row');
+            const incomeId = row.dataset.id;
+            
+            if (!incomeId) return; // Skip if no ID (e.g. placeholder)
+
+            if(confirm('Are you sure you want to delete this income source?')) {
+                fetch(`/delete-income/${incomeId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        row.remove();
+                        location.reload(); 
+                    } else {
+                        alert('Error deleting income');
+                    }
+                });
+            }
+        });
+    });
+
+    // Handle Income Edit
+    document.querySelectorAll('.btn-edit-income').forEach(button => {
+        button.addEventListener('click', function() {
+            const row = this.closest('.income-row');
+            const incomeId = row.dataset.id;
+            if (!incomeId) return;
+
+            const detailsWrapper = row.querySelector('.income-details-wrapper');
+            const titleEl = detailsWrapper.querySelector('.income-title');
+            const amountEl = detailsWrapper.querySelector('.income-amount');
+            
+            if (this.textContent === 'Save') {
+                const newDesc = titleEl.querySelector('input').value;
+                const newAmount = amountEl.querySelector('input').value;
+
+                fetch(`/update-income/${incomeId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        description: newDesc,
+                        amount: newAmount
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        titleEl.textContent = newDesc;
+                        amountEl.textContent = '$' + parseFloat(newAmount).toFixed(2);
+                        this.textContent = 'Edit';
+                        location.reload();
+                    } else {
+                        alert('Error updating income');
+                    }
+                });
+
+            } else {
+                // Switch to edit mode
+                const currentTitle = titleEl.textContent;
+                const currentAmount = amountEl.textContent.replace('$', '').trim();
+
+                titleEl.innerHTML = `<input type="text" value="${currentTitle}" class="edit-income-title">`;
+                amountEl.innerHTML = `<input type="number" step="0.01" value="${currentAmount}" class="edit-income-amount">`;
+                
+                this.textContent = 'Save';
+            }
+        });
+    });
+
 });

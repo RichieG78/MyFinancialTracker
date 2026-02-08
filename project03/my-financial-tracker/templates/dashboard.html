@@ -27,16 +27,30 @@
             <a href="{{ url_for('add_income') }}"><button class="btn-new">Add Income</button></a>
         </div>
 
-        <div class="income-row">
-            <span class="label">Primary Income</span>
-            {% set primary_income = incomes | selectattr("type", "equalto", "primary") | list | last %}
-            <span class="amount">${{ "%.2f"|format(primary_income.amount) if primary_income else "0.00" }}</span>
+        {% set primary_income = incomes | selectattr("type", "equalto", "primary") | list | last %}
+        <div class="income-row" data-id="{{ primary_income.id if primary_income else '' }}">
+            <div class="income-details-wrapper">
+                <span class="income-title">{{ primary_income.description if primary_income else 'Primary Income' }}</span>
+                <span class="income-amount">${{ "%.2f"|format(primary_income.amount) if primary_income else "0.00" }}</span>
+            </div>
+            {% if primary_income %}
+            <div class="income-actions">
+                <button class="btn-edit-income" style="padding: 2px 5px; font-size: 0.7rem;">Edit</button>
+                <button class="btn-delete-income" style="padding: 2px 5px; font-size: 0.7rem;">Del</button>
+            </div>
+            {% endif %}
         </div>
 
         {% for income in incomes if income.type == 'other' %}
-        <div class="income-row">
-            <span class="label">{{ income.description }}</span>
-            <span class="amount">${{ "%.2f"|format(income.amount) }}</span>
+        <div class="income-row" data-id="{{ income.id }}">
+            <div class="income-details-wrapper">
+                <span class="income-title">{{ income.description }}</span>
+                <span class="income-amount">${{ "%.2f"|format(income.amount) }}</span>
+            </div>
+            <div class="income-actions">
+                <button class="btn-edit-income" style="padding: 2px 5px; font-size: 0.7rem;">Edit</button>
+                <button class="btn-delete-income" style="padding: 2px 5px; font-size: 0.7rem;">Del</button>
+            </div>
         </div>
         {% endfor %}
 

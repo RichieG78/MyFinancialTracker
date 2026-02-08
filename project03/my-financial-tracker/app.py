@@ -29,6 +29,7 @@ class FutureExpense(Expense):
 # --- Income Classes ---
 class Income:
     def __init__(self, amount, frequency):
+        self.id = str(uuid.uuid4())
         self.amount = float(amount)
         self.frequency = frequency
         self.description = None
@@ -151,6 +152,30 @@ def update_expense(expense_id):
                     return jsonify({'success': False, 'error': 'Invalid amount'}), 400
             return jsonify({'success': True})
     return jsonify({'success': False, 'error': 'Expense not found'}), 404
+
+@app.route('/delete-income/<income_id>', methods=['DELETE'])
+def delete_income(income_id):
+    global incomes
+    initial_count = len(incomes)
+    incomes = [i for i in incomes if i.id != income_id]
+    if len(incomes) < initial_count:
+        return jsonify({'success': True})
+    return jsonify({'success': False, 'error': 'Income not found'}), 404
+
+@app.route('/update-income/<income_id>', methods=['POST'])
+def update_income(income_id):
+    data = request.json
+    for income in incomes:
+        if income.id == income_id:
+            if 'description' in data:
+                income.description = data['description']
+            if 'amount' in data:
+                try:
+                    income.amount = float(data['amount'])
+                except ValueError:
+                    return jsonify({'success': False, 'error': 'Invalid amount'}), 400
+            return jsonify({'success': True})
+    return jsonify({'success': False, 'error': 'Income not found'}), 404
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -276,3 +276,55 @@ button:hover {
     box-sizing: border-box;
 }
 
+/* Income Actions */
+.income-details-wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.income-title, .income-amount {
+    font-size: 0.95rem;
+}
+
+.income-actions {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.btn-edit-income {
+    background-color: #f39c12;
+    color: white;
+    padding: 3px 8px;
+    font-size: 0.75rem;
+    border-radius: 3px;
+}
+
+.btn-delete-income {
+    background-color: #e74c3c;
+    color: white;
+    padding: 3px 8px;
+    font-size: 0.75rem;
+    border-radius: 3px;
+}
+
+/* Edit Inputs for Income */
+.edit-income-title {
+    width: 60%;
+    padding: 2px;
+    font-size: 0.9rem;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.edit-income-amount {
+    width: 30%;
+    padding: 2px;
+    font-size: 0.9rem;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
