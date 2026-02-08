@@ -12,10 +12,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const TARGET_FUN = 30;
     const TARGET_FUTURE = 20;
 
-    function updateChart(totalAmount, targetPercent, barClass) {
+    function updateChart(totalAmount, targetPercent, barClass, labelClass) {
         let percent = 0;
         if (totalIncome > 0) {
             percent = (totalAmount / totalIncome) * 100;
+        }
+
+        // Update Label
+        const label = document.querySelector(`.${labelClass}`);
+        if(label) {
+            // Display decimal only if not a whole number to keep it clean, or 1 decimal fixed
+            label.textContent = (percent % 1 === 0 ? percent : percent.toFixed(1)) + '%';
         }
 
         const bar = document.querySelector(`.${barClass}`);
@@ -36,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    updateChart(totalFixed, TARGET_FIXED, 'bar-fixed');
-    updateChart(totalFun, TARGET_FUN, 'bar-fun');
-    updateChart(totalFuture, TARGET_FUTURE, 'bar-future');
+    updateChart(totalFixed, TARGET_FIXED, 'bar-fixed', 'percent-fixed');
+    updateChart(totalFun, TARGET_FUN, 'bar-fun', 'percent-fun');
+    updateChart(totalFuture, TARGET_FUTURE, 'bar-future', 'percent-future');
 });

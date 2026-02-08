@@ -108,10 +108,30 @@ main {
 }
 
 .chart-header {
-    display: flex;
-    justify-content: space-between;
+    position: relative;
+    height: 1.5em; /* Ensure height for the absolute positioning */
     margin-bottom: 5px;
     font-size: 0.9rem;
+}
+
+.chart-header span:first-child {
+    float: left; /* Keep the category name on the left */
+}
+
+.target-text {
+    position: absolute;
+    transform: translateX(-50%); /* Center the text on the exact percentage point */
+    white-space: nowrap;
+    /* Optional: make it smaller or bold if needed */
+    font-size: 0.8em;
+    color: #555;
+    bottom: 0; /* Align to bottom of header area */
+}
+
+.current-percent {
+    float: right;
+    font-weight: bold;
+    color: #333;
 }
 
 .chart-track {
@@ -219,11 +239,14 @@ main {
     margin: 0;
     font-size: 1rem;
     color: #333;
+    flex-grow: 1;
+    margin-right: 10px;
 }
 
 .transaction-amount {
     font-weight: bold;
     color: #e74c3c; /* Red for expense */
+    flex-shrink: 0;
 }
 
 .transaction-actions {
@@ -263,17 +286,18 @@ button:hover {
 
 /* Inline Edit Inputs */
 .edit-input-title {
-    width: 60%;
+    width: 100%;
     padding: 5px;
     font-size: 1rem;
     box-sizing: border-box;
 }
 
 .edit-input-amount {
-    width: 30%;
+    width: 80px;
     padding: 5px;
     font-size: 1rem;
     box-sizing: border-box;
+    text-align: right;
 }
 
 /* Income Actions */

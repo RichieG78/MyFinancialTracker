@@ -1,6 +1,6 @@
 # Intentional Spending Tracker
 
-[GitHub Repository](https://github.com/your-username/intentional-spending-tracker)
+[GitHub Repository] https://github.com/RichieG78/MyFinancialTracker.git
 
 ## Website
 
@@ -83,6 +83,8 @@ The following routes are implemented:
 - `/add-expense` – Form to add spending transactions (GET/POST)
 - `/delete-expense/<expense_id>` – API endpoint to delete an expense (DELETE)
 - `/update-expense/<expense_id>` – API endpoint to update an expense description or amount (POST)
+- `/delete-income/<income_id>` – API endpoint to delete an income source (DELETE)
+- `/update-income/<income_id>` – API endpoint to update an income description or amount (POST)
 
 These routes demonstrate the use of multiple HTTP methods (`GET`, `POST`, `DELETE`) and Flask’s `render_template` and `jsonify` functionality.
 
@@ -163,10 +165,12 @@ On smaller screens, the three columns stack vertically while preserving clarity 
 ## 6. JavaScript Interactivity
 
 JavaScript is used to enhance the user experience significantly, creating a dynamic interface:
-- **Visual Charts:** `charts.js` animates progress bars and changes their color to red if spending exceeds the target percentage (50%/30%/20%).
+- **Visual Charts:** `charts.js` renders dynamic progress bars.
+    - Bars and target lines turn **red** if spending exceeds the category target (50%/30%/20%).
+    - Real-time **percentage labels** are calculated and displayed on the chart headers.
 - **Inline Editing & Deletion:** `dashboard.js` enables users to:
-    - Edit expense descriptions and amounts directly within the dashboard cards (AJAX).
-    - Delete expenses without reloading the entire page (AJAX).
+    - Edit **expense** and **income** descriptions and amounts directly within the dashboard cards (AJAX).
+    - Delete expenses and income entries without reloading the entire page (AJAX).
 
 These features create a more engaging single-page application feel while remaining maintained by a Flask backend.
 
@@ -211,7 +215,7 @@ This project meets distinction criteria by:
 
 ---
 
-## 9. Conclusion
+## 10. Conclusion
 
 The Intentional Spending Tracker successfully fulfils the requirements of the Python Flask assignment. By combining a clear financial concept with structured Python code and a modern dashboard interface, the project demonstrates both technical competence and thoughtful application design appropriate for a distinction-level submission.
 
