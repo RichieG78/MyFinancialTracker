@@ -4,43 +4,50 @@ import uuid
 app = Flask(__name__)
 
 # --- Expense Classes ---
+# Base class for all expenses
 class Expense:
     def __init__(self, description, amount):
-        self.id = str(uuid.uuid4())
+        self.id = str(uuid.uuid4()) # Unique ID for identification
         self.description = description
         self.amount = float(amount)
         self.type = None # To be set by subclasses
 
+# Subclass for fixed expenses (Target: 50%)
 class FixedExpense(Expense):
     def __init__(self, description, amount):
         super().__init__(description, amount)
         self.type = 'fixed'
 
+# Subclass for fun/discretionary expenses (Target: 30%)
 class FunExpense(Expense):
     def __init__(self, description, amount):
         super().__init__(description, amount)
         self.type = 'fun'
 
+# Subclass for savings/future expenses (Target: 20%)
 class FutureExpense(Expense):
     def __init__(self, description, amount):
         super().__init__(description, amount)
         self.type = 'future'
 
 # --- Income Classes ---
+# Base class for income sources
 class Income:
     def __init__(self, amount, frequency):
-        self.id = str(uuid.uuid4())
+        self.id = str(uuid.uuid4()) # Unique ID for identification
         self.amount = float(amount)
         self.frequency = frequency
         self.description = None
         self.type = None
 
+# Subclass for the main salary/primary income
 class PrimaryIncome(Income):
     def __init__(self, amount, frequency):
         super().__init__(amount, frequency)
         self.description = "Primary Income"
         self.type = 'primary'
 
+# Subclass for any additional income sources
 class OtherIncome(Income):
     def __init__(self, amount, frequency, description=None):
         super().__init__(amount, frequency)
@@ -50,10 +57,11 @@ class OtherIncome(Income):
         else:
              self.description = "Other Income"
 
-# In-memory storage
+# In-memory storage (reset on server restart)
 expenses = []
 incomes = []
 
+# Helper function to normalize all income to a monthly value
 def calculate_monthly_income(income):
     amount = income.amount
     freq = income.frequency.lower()
@@ -67,8 +75,12 @@ def calculate_monthly_income(income):
         return amount / 12
     return 0
 
+# --- Routes ---
+
+# Home Route: Displays the dashboard
 @app.route('/')
 def index():
+    # Calculate totals for charts
     total_income = sum(calculate_monthly_income(i) for i in incomes)
     total_fixed = sum(e.amount for e in expenses if e.type == 'fixed')
     total_fun = sum(e.amount for e in expenses if e.type == 'fun')
@@ -82,6 +94,7 @@ def index():
                            total_fun=total_fun,
                            total_future=total_future)
 
+# Route to add new income (Handles both displaying form and processing submission)
 @app.route('/add-income', methods=['GET', 'POST'])
 def add_income():
     if request.method == 'POST':
@@ -95,7 +108,7 @@ def add_income():
             if income_type == 'primary':
                 new_income = PrimaryIncome(amount, frequency)
             elif income_type == 'other':
-                # Use provided description or generate a default like "Other 1", "Other 2" based on existing count
+                # Use provided description or generate a default like "Other 1", "Other 2"
                 if not other_description:
                     count = len([i for i in incomes if i.type == 'other']) + 1
                     other_description = f"Other Income {count}"
@@ -107,6 +120,7 @@ def add_income():
 
     return render_template('add-income.html')
 
+# Route to add new expenses (Handles both displaying form and processing submission)
 @app.route('/add-expense', methods=['GET', 'POST'])
 def add_expense():
     if request.method == 'POST':
@@ -116,6 +130,7 @@ def add_expense():
         
         if description and amount and expense_type:
             new_expense = None
+            # Instantiate correct class based on user selection
             if expense_type == 'fixed':
                 new_expense = FixedExpense(description, amount)
             elif expense_type == 'fun':
@@ -129,15 +144,19 @@ def add_expense():
             
     return render_template('add-expense.html')
 
+# API Route: Delete Expense (Called via AJAX)
 @app.route('/delete-expense/<expense_id>', methods=['DELETE'])
 def delete_expense(expense_id):
     global expenses
     initial_count = len(expenses)
+    # Filter out the expense with the matching ID
     expenses = [e for e in expenses if e.id != expense_id]
+    
     if len(expenses) < initial_count:
         return jsonify({'success': True})
     return jsonify({'success': False, 'error': 'Expense not found'}), 404
 
+# API Route: Update Expense (Called via AJAX)
 @app.route('/update-expense/<expense_id>', methods=['POST'])
 def update_expense(expense_id):
     data = request.json
@@ -153,6 +172,7 @@ def update_expense(expense_id):
             return jsonify({'success': True})
     return jsonify({'success': False, 'error': 'Expense not found'}), 404
 
+# API Route: Delete Income (Called via AJAX)
 @app.route('/delete-income/<income_id>', methods=['DELETE'])
 def delete_income(income_id):
     global incomes
@@ -162,6 +182,7 @@ def delete_income(income_id):
         return jsonify({'success': True})
     return jsonify({'success': False, 'error': 'Income not found'}), 404
 
+# API Route: Update Income (Called via AJAX)
 @app.route('/update-income/<income_id>', methods=['POST'])
 def update_income(income_id):
     data = request.json
