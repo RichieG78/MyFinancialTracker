@@ -51,9 +51,33 @@ class OtherIncome(Income):
 expenses = []
 incomes = []
 
+def calculate_monthly_income(income):
+    amount = income.amount
+    freq = income.frequency.lower()
+    if freq == 'hourly':
+        return amount * 40 * 52 / 12 # Approximation: 40hr work week
+    elif freq == 'weekly':
+        return amount * 52 / 12
+    elif freq == 'monthly':
+        return amount
+    elif freq == 'annually':
+        return amount / 12
+    return 0
+
 @app.route('/')
 def index():
-    return render_template('dashboard.html', expenses=expenses, incomes=incomes)
+    total_income = sum(calculate_monthly_income(i) for i in incomes)
+    total_fixed = sum(e.amount for e in expenses if e.type == 'fixed')
+    total_fun = sum(e.amount for e in expenses if e.type == 'fun')
+    total_future = sum(e.amount for e in expenses if e.type == 'future')
+
+    return render_template('dashboard.html', 
+                           expenses=expenses, 
+                           incomes=incomes,
+                           total_income=total_income,
+                           total_fixed=total_fixed,
+                           total_fun=total_fun,
+                           total_future=total_future)
 
 @app.route('/add-income', methods=['GET', 'POST'])
 def add_income():

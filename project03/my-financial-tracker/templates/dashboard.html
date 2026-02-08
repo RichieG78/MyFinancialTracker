@@ -173,5 +173,12 @@
         </div>
     </div>
     </main>
+    <div id="financial-data" 
+         data-total-income="{{ total_income }}"
+         data-total-fixed="{{ total_fixed }}"
+         data-total-fun="{{ total_fun }}"
+         data-total-future="{{ total_future }}"
+         style="display:none;"></div>
+    <script src="{{ url_for('static', filename='js/charts.js') }}"></script>
 </body>
 </html>
