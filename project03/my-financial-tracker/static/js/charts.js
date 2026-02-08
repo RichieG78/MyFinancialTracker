@@ -27,10 +27,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (targetLine) {
                 if (percent > targetPercent) {
                     targetLine.style.backgroundColor = 'red';
-                    // Optional: Make the bar red too or just the line as requested?
-                    // "target line should change colour to red"
+                    bar.style.backgroundColor = 'red';
                 } else {
                     targetLine.style.backgroundColor = ''; // Reset to default CSS
+                    bar.style.backgroundColor = '';
                 }
             }
         }

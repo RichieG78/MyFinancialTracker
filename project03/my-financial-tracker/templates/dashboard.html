@@ -107,7 +107,7 @@
                     <h3>Fixed</h3>
                 </div>
                 {% for expense in expenses if expense.type == 'fixed' %}
-                <div class="transaction-card">
+                <div class="transaction-card" data-id="{{ expense.id }}">
                     <div class="transaction-details">
                         <h4 class="transaction-title">{{ expense.description }}</h4>
                         <span class="transaction-amount">${{ "%.2f"|format(expense.amount) }}</span>
@@ -130,7 +130,7 @@
                     <h3>Fun</h3>
                 </div>
                 {% for expense in expenses if expense.type == 'fun' %}
-                <div class="transaction-card">
+                <div class="transaction-card" data-id="{{ expense.id }}">
                     <div class="transaction-details">
                         <h4 class="transaction-title">{{ expense.description }}</h4>
                         <span class="transaction-amount">${{ "%.2f"|format(expense.amount) }}</span>
@@ -153,7 +153,7 @@
                     <h3>Future</h3>
                 </div>
                 {% for expense in expenses if expense.type == 'future' %}
-                <div class="transaction-card">
+                <div class="transaction-card" data-id="{{ expense.id }}">
                     <div class="transaction-details">
                         <h4 class="transaction-title">{{ expense.description }}</h4>
                         <span class="transaction-amount">${{ "%.2f"|format(expense.amount) }}</span>
@@ -180,5 +180,6 @@
          data-total-future="{{ total_future }}"
          style="display:none;"></div>
     <script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 </body>
 </html>

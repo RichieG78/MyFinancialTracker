@@ -1,10 +1,12 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
+import uuid
 
 app = Flask(__name__)
 
 # --- Expense Classes ---
 class Expense:
     def __init__(self, description, amount):
+        self.id = str(uuid.uuid4())
         self.description = description
         self.amount = float(amount)
         self.type = None # To be set by subclasses
@@ -125,6 +127,30 @@ def add_expense():
                 return redirect(url_for('index'))
             
     return render_template('add-expense.html')
+
+@app.route('/delete-expense/<expense_id>', methods=['DELETE'])
+def delete_expense(expense_id):
+    global expenses
+    initial_count = len(expenses)
+    expenses = [e for e in expenses if e.id != expense_id]
+    if len(expenses) < initial_count:
+        return jsonify({'success': True})
+    return jsonify({'success': False, 'error': 'Expense not found'}), 404
+
+@app.route('/update-expense/<expense_id>', methods=['POST'])
+def update_expense(expense_id):
+    data = request.json
+    for expense in expenses:
+        if expense.id == expense_id:
+            if 'description' in data:
+                expense.description = data['description']
+            if 'amount' in data:
+                try:
+                    expense.amount = float(data['amount'])
+                except ValueError:
+                    return jsonify({'success': False, 'error': 'Invalid amount'}), 400
+            return jsonify({'success': True})
+    return jsonify({'success': False, 'error': 'Expense not found'}), 404
 
 if __name__ == '__main__':
     app.run(debug=True)

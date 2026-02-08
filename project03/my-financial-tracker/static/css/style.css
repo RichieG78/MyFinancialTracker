@@ -261,3 +261,18 @@ button:hover {
     color: white;
 }
 
+/* Inline Edit Inputs */
+.edit-input-title {
+    width: 60%;
+    padding: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.edit-input-amount {
+    width: 30%;
+    padding: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
