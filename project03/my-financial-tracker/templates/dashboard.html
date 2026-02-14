@@ -55,10 +55,36 @@
         </div>
         {% endfor %}
 
+
         <div class="income-row total-row">
-            <span class="label">Total Income</span>
-            <span class="amount">${{ "%.2f"|format(incomes | sum(attribute='amount')) }}</span>
+            <span class="label">Total Monthly Income</span>
+            <span class="amount">${{ "%.2f"|format(total_income) }}</span>
         </div>
+
+        {% set total_expenses = total_fixed + total_fun + total_future %}
+        {% set remaining = total_income - total_expenses %}
+
+        <div class="income-row" style="border-bottom: 1px solid #eee; padding: 8px 0;">
+            <span class="label">Total Expenses</span>
+            <span class="amount" style="color: #e74c3c;">- ${{ "%.2f"|format(total_expenses) }}</span>
+        </div>
+
+        <div class="income-row" style="padding-top: 10px; font-weight: bold; font-size: 1.1em;">
+            <span class="label">Remaining</span>
+            <span class="amount" style="{{ 'color: #c0392b;' if remaining < 0 else 'color: #27ae60;' }}">
+                ${{ "%.2f"|format(remaining) }}
+            </span>
+        </div>
+
+        {% if remaining < 0 %}
+        <div style="background-color: #fce4ec; color: #c0392b; padding: 10px; margin-top: 15px; border-radius: 5px; text-align: center; border: 1px solid #e74c3c;">
+            <strong>Warning:</strong> You have overspent your income!
+        </div>
+        {% elif remaining|abs < 0.01 and total_income > 0 %}
+        <div style="background-color: #e8f5e9; color: #27ae60; padding: 10px; margin-top: 15px; border-radius: 5px; text-align: center; border: 1px solid #27ae60;">
+            <strong>Great!</strong> You have allocated all of your income for the month!
+        </div>
+        {% endif %}
     </div>
 
 <!-- Data Visualisation Container -->
