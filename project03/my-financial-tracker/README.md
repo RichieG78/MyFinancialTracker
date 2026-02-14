@@ -4,7 +4,7 @@
 
 ## Website
 
-**[View Intentional Spending Tracker Live](https://your-render-url.onrender.com)**
+**[View Intentional Spending Tracker Live](https://myfinancialtracker.onrender.com/)**
 
 ---
 
@@ -20,6 +20,36 @@ The core concept of the application is based on an intentional budgeting framewo
 The application allows users to record income and expenses, automatically calculate how spending is distributed across these categories, and visually compare the **target percentages** against the **actual percentages** being spent.
 
 The project was created specifically to demonstrate a strong understanding of **Flask application structure**, **object-oriented Python**, and the **integration of HTML, CSS, and JavaScript** in line with the Python assignment brief.
+
+---
+
+## Installation and Execution
+
+To run the application locally for development or assessment purposes:
+
+1.  **Clone the Repository**
+    ```bash
+    git clone https://github.com/RichieG78/MyFinancialTracker.git
+    cd MyFinancialTracker
+    ```
+
+2.  **Create and Activate Virtual Environment**
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate  # On macOS/Linux
+    # venv\Scripts\activate   # On Windows
+    ```
+
+3.  **Install Dependencies**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4.  **Run the Application**
+    ```bash
+    python3 app.py
+    ```
+    The application will be accessible at `http://127.0.0.1:5000/`.
 
 ---
 
@@ -44,7 +74,7 @@ This concept directly aligns with the assignment requirement to build a **functi
 Prior to development, research was conducted into personal finance dashboards and budgeting methodologies.
 
 **Inspiration:**
-The core **50/30/20 framework** and the specific **interactive dashboard design** were inspired by the financial educator **Nischa** and her video guide on the topic (embedded on the Home page). The visual concept of separating expenses into three distinct buckets for immediate visual feedback is drawn directly from her advice.
+The core **50/30/20 framework** and the specific **interactive dashboard design** were inspired by the financial educator **Nischa** and her video guide on the topic (embedded on the Home page and link here: https://youtu.be/4sT2B2SRypo). The visual concept of separating expenses into three distinct buckets for immediate visual feedback and the initial design of the dashboard page is drawn directly from her google spreadsheet design and her advice.
 
 **Original Contributions:**
 While the dashboard follows this inspired structure, all other features are original implementations created for this project, including:
@@ -61,10 +91,12 @@ This research influenced several design decisions, including:
 These design choices ensured that the application would be intuitive, visually clear, and suitable for a single-page dashboard layout.
 
 ### 1.3 Sitemap and Wireframes
-The application uses a small number of focused routes:
-- Dashboard (Home)
+The application uses a small number of focused routes built in html and demonstrating flash and Jinja integration:
+- Home
+- Dashboard
 - Add Income
 - Add Expense
+- Performance
 
 Wireframes were created to plan the three-column dashboard layout and ensure consistent placement of totals, progress indicators, and transaction cards across screen sizes.
 
@@ -87,7 +119,9 @@ Flask is responsible for:
 ### 2.2 Routes
 The following routes are implemented:
 
-- `/` – Main dashboard displaying spending overview, charts and expense lists
+- `/` – Landing page with educational content and budget framework guide
+- `/dashboard` – Main dashboard displaying spending overview, charts and expense lists
+- `/performance` – Financial Performance dashboard with spending trends and recommendations
 - `/add-income` – Form to add income entries (GET/POST)
 - `/add-expense` – Form to add spending transactions (GET/POST)
 - `/delete-expense/<expense_id>` – API endpoint to delete an expense (DELETE)
@@ -118,7 +152,7 @@ This class-based approach improves code readability, separation of concerns, and
 All financial calculations are handled in Python, including:
 - Total income calculation (converting different frequencies to monthly)
 - Total spending per category
-- In-memory data storage using lists
+- **In-memory data storage:** For the scope of this assignment, data is stored in global lists (`expenses` and `incomes`). This ensures simple deployment and focuses the project on Python logic and Flask structure. Use of a persistent database (SQLite/PostgreSQL) would be a future enhancement.
 
 Only processed data is passed to the templates, ensuring that presentation logic remains separate from business logic.
 
@@ -127,25 +161,28 @@ Only processed data is passed to the templates, ensuring that presentation logic
 ## 4. HTML Structure and Content
 
 ### 4.1 Templates
-The application includes essential HTML templates, each with a consistent structure:
-- `home.html` – The landing page, featuring an **embedded educational video** and clear breakdown of the 50/30/20 framework to guide new users.
-- `dashboard.html` – The main interface showing charts, transaction columns, and the **budget countdown counter** which notifies users if they have overspent or perfectly allocated their income.
-- `add-income.html` – Form for adding new income sources
-- `add-expense.html` – Form for adding new expenses
+The application includes **five distinct HTML templates**, successfully meeting the assignment requirement for multiple page structures. Each template shares a consistent design while serving a unique purpose:
+
+- `home.html` – The landing page, featuring an **embedded educational video** and clear breakdown of the 50/30/20 framework.
+- `dashboard.html` – The main interface showing charts, transaction columns, and the **budget countdown counter** for real-time feedback.
+- `annual-performance.html` – A detailed report page showing annualized spending projections and intelligent financial recommendations.
+- `add-income.html` – A dedicated form page for adding and calculating income sources.
+- `add-expense.html` – A dedicated form page for recording new transactions.
 
 Each template includes semantic HTML elements such as `<header>`, `<main>`, and `<nav>` to improve accessibility and maintainability.
 
 ### 4.2 Dashboard Layout
-The main dashboard uses a **three-column layout**, with each column representing one spending category:
-- Fixed
-- Fun
-- Future
+The main dashboard is divided into two key sections:
 
-Each column displays:
-- Target percentage
-- Actual percentage
-- Visual progress bar
-- List of transactions
+**1. Overview & Visuals (Top Row):**
+- **Income Summary:** Displays total income, total expenses, and remaining budget with status alerts.
+- **Expenditure Charts:** Visual progress bars comparing **Target** vs **Actual** percentages for each category.
+
+**2. Expense Tracker (Bottom Row):**
+A **three-column layout** where each column represents one spending category (Fixed, Fun, Future) and displays:
+- Category Header
+- List of individual transaction cards (with edit/delete options)
+- Total category spend summary
 
 ---
 
@@ -162,25 +199,22 @@ The layout is implemented using:
 - **CSS Grid** for the three-column dashboard
 - **Flexbox** for card and form alignment
 
-### 5.3 Responsive Design
-Media queries ensure the application is usable across:
-- Desktop
-- Tablet
-- Mobile
-
-On smaller screens, the three columns stack vertically while preserving clarity and usability.
-
----
+### 5.3 Desktop-First Design Approach
+The application is explicitly designed for **desktop use**. Mobile responsiveness was not a stated requirement for this assignment, and a deliberate design decision was made to prioritize the desktop experience. The complex 3-column dashboard layout is optimized for wider screens (1280px+) to allow users to view their entire financial picture—goals, actuals, and transactions—at a single glance, aligning with the typical user behavior of managing detailed finances on a computer. Use on mobile devices is not supported in this version, but could be developed for later versions.
+--- 
 
 ## 6. JavaScript Interactivity
 
 JavaScript is used to enhance the user experience significantly, creating a dynamic interface:
-- **Visual Charts:** `charts.js` renders dynamic progress bars.
-    - Bars and target lines turn **red** if spending exceeds the category target (50%/30%/20%).
-    - Real-time **percentage labels** are calculated and displayed on the chart headers.
+- **Visual Charts & Graphs:**
+    - `charts.js` renders dynamic progress bars on the main dashboard that turn **red** if spending exceeds category targets (50%/30%/20%).
+    - **Chart.js** is utilised on the **Performance Dashboard** to render interactive bar charts showing annualised spending trends.
+- **Interactive Budget Counter:** A dynamic monitoring system that calculates total expenditure against income in real-time. It provides immediate feedback by displaying:
+    - A **Green** success message when income is perfectly allocated.
+    - A **Red** warning alert when spending exceeds available income.
 - **Inline Editing & Deletion:** `dashboard.js` enables users to:
     - Edit **expense** and **income** descriptions and amounts directly within the dashboard cards (AJAX).
-    - Delete expenses and income entries without reloading the entire page (AJAX).
+    - Delete expenses and income entries seamlessly, triggering instant recalculations of the budget totals.
 
 These features create a more engaging single-page application feel while remaining maintained by a Flask backend.
 
@@ -195,7 +229,7 @@ The project is managed using Git and hosted on GitHub:
 - Separation of concerns between backend and frontend assets
 
 ### 7.2 Render Deployment
-The application is deployed using **Render.com**, following the steps outlined in the assignment brief:
+The application is deployed using **Render.com** and located here: https://myfinancialtracker.onrender.com, following the steps outlined in the assignment brief:
 - GitHub repository connected to Render
 - Web service created
 - Environment configured
@@ -205,16 +239,27 @@ The hosted version mirrors the local development version and is fully functional
 
 ---
 
-## 8. Challenges and Design Decisions
+## 8. Testing Strategy
 
-### 8.1 Routing vs Static Interfaces
+Manual testing was conducted throughout development to ensure functional correctness and user experience:
+
+- **Functional Testing:** Verified that all CRUD operations (Create, Read, Update, Delete) for Incomes and Expenses function correctly and update the totals in real-time.
+- **Desktop Layout Check:** Confirmed that the dashboard's 3-column layout renders correctly on standard desktop resolutions, ensuring all data is visible at a glance.
+- **Edge Cases:** Tested inputs with empty fields and invalid numbers to ensure the application handles errors gracefully without crashing.
+- **Cross-Browser Handling:** Checked rendering on Chrome and Safari to ensure consistent styling.
+
+---
+
+## 9. Challenges and Design Decisions
+
+### 9.1 Routing vs Static Interfaces
 For the purpose of demonstrating Python functionality and Flask routing capabilities, the application was explicitly designed with separate routes and templates for adding income (`/add-income`) and expenses (`/add-expense`). This approach allows for clear demonstration of server-side rendering, form handling, and request processing in Python.
 
 If I were designing this application again without the specific requirement to demonstrate Python functionality, I would likely opt for a single-page application (SPA) approach or use modal dialogs on the main dashboard. This would allow users to add transactions without leaving the main view, providing a smoother user experience, though it would rely more heavily on client-side JavaScript rather than Flask's routing mechanisms.
 
 ---
 
-## 9. Distinction-Level Features Summary
+## 10. Distinction-Level Features Summary
 
 This project meets distinction criteria by:
 - Demonstrating strong understanding of Flask routing and request handling
@@ -225,7 +270,15 @@ This project meets distinction criteria by:
 
 ---
 
-## 10. Conclusion
+## 11. Conclusion
 
 The Intentional Spending Tracker successfully fulfils the requirements of the Python Flask assignment. By combining a clear financial concept with structured Python code and a modern dashboard interface, the project demonstrates both technical competence and thoughtful application design appropriate for a distinction-level submission.
+
+---
+
+## 12. References
+
+- **Nischa (Financial Educator):** *How to Budget in 2024: The 50/30/20 Rule.* [YouTube Video](https://www.youtube.com/watch?v=4sT2B2SRypo)
+- **Flask Documentation:** Used for routing and template rendering reference.
+- **MDN Web Docs:** Referenced for modern CSS Grid and Flexbox techniques.
 
