@@ -13,6 +13,7 @@
         <ul>
             <li><a href="{{ url_for('index') }}">Home</a></li>
             <li><a href="{{ url_for('dashboard') }}" class="active">Dashboard</a></li>
+            <li><a href="{{ url_for('performance') }}">Performance</a></li>
             <li><a href="{{ url_for('add_income') }}">Add Income</a></li>
             <li><a href="{{ url_for('add_expense') }}">Add Expense</a></li>
     </aside></nav>
@@ -71,9 +72,15 @@
 
         <div class="income-row" style="padding-top: 10px; font-weight: bold; font-size: 1.1em;">
             <span class="label">Remaining</span>
-            <span class="amount" style="{{ 'color: #c0392b;' if remaining < 0 else 'color: #27ae60;' }}">
+            {% if remaining < 0 %}
+            <span class="amount" style="color: #c0392b;">
                 ${{ "%.2f"|format(remaining) }}
             </span>
+            {% else %}
+            <span class="amount" style="color: #27ae60;">
+                ${{ "%.2f"|format(remaining) }}
+            </span>
+            {% endif %}
         </div>
 
         {% if remaining < 0 %}

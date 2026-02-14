@@ -29,11 +29,13 @@ The project was created specifically to demonstrate a strong understanding of **
 The Intentional Spending Tracker was designed to move beyond a basic expense tracker and instead focus on **behavioural insight**. By framing financial data around intention versus reality, the application helps users quickly identify where their spending habits align with, or diverge from, their financial goals.
 
 Key features include:
-- Income tracking
+- Income tracking with automatic frequency calculation
 - Expense tracking
 - Three-category intentional spending model (Fixed / Fun / Future)
 - Automatic calculation of spending percentages
 - Visual comparison of target versus actual spending
+- **Real-time budget health notifications** (warnings when overspending, success message when budget is balanced)
+- **Educational Home Page** with embedded video guide and clear instructions
 - Dashboard-style single-page overview
 
 This concept directly aligns with the assignment requirement to build a **functional, engaging, and visually appealing web application** using Flask.
@@ -119,7 +121,8 @@ Only processed data is passed to the templates, ensuring that presentation logic
 
 ### 4.1 Templates
 The application includes essential HTML templates, each with a consistent structure:
-- `dashboard.html` – The main interface showing charts and transaction columns
+- `home.html` – The landing page, featuring an **embedded educational video** and clear breakdown of the 50/30/20 framework to guide new users.
+- `dashboard.html` – The main interface showing charts, transaction columns, and the **budget countdown counter** which notifies users if they have overspent or perfectly allocated their income.
 - `add-income.html` – Form for adding new income sources
 - `add-expense.html` – Form for adding new expenses
 

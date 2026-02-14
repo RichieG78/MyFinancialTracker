@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 import uuid
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -10,6 +11,7 @@ class Expense:
         self.id = str(uuid.uuid4()) # Unique ID for identification
         self.description = description
         self.amount = float(amount)
+        self.date = datetime.now() # Record creation time
         self.type = None # To be set by subclasses
 
 # Subclass for fixed expenses (Target: 50%)
@@ -98,6 +100,80 @@ def dashboard():
                            total_fixed=total_fixed,
                            total_fun=total_fun,
                            total_future=total_future)
+
+# Performance Route: Financial Performance Dashboard
+@app.route('/performance')
+def performance():
+    # 1. Annual Calculation
+    monthly_income = sum(calculate_monthly_income(i) for i in incomes)
+    annual_income = monthly_income * 12
+    
+    # Calculate total money spent so far (Simple sum of all recorded expenses)
+    total_spent_so_far = sum(e.amount for e in expenses)
+    
+    # Simple projection: Annual expense = average daily expense * 365 
+    # (Just for demo purposes, or just use sum if we assume data is comprehensive)
+    annual_expense = total_spent_so_far # In a real app this would be more complex
+
+    # 2. Monthly Breakdown (Mocking dates for demonstration if needed, or using actuals)
+    spending_by_month = {}
+    for e in expenses:
+        month_key = e.date.strftime("%B %Y")
+        spending_by_month[month_key] = spending_by_month.get(month_key, 0) + e.amount
+
+    # 3. Top Spending Categories/Items
+    sorted_expenses = sorted(expenses, key=lambda x: x.amount, reverse=True)[:5]
+    
+    # 4. Recommendations Logic
+    recommendations = []
+    
+    # Insurance Check
+    if any("insurance" in e.description.lower() for e in expenses):
+        recommendations.append({
+            "title": "Insurance Review",
+            "text": "You have listed insurance expenses. Compare quotes with our partner <a href='#'>SafeCover</a> to potentially save up to £200/year.",
+            "type": "opportunity"
+        })
+    
+    # Energy/Bills Check
+    if any(k in e.description.lower() for k in ['energy', 'electric', 'gas', 'bill'] for e in expenses):
+         recommendations.append({
+            "title": "Energy Bill Saver",
+            "text": "Energy prices are fluctuating. Check if you can fix your tariff now with <a href='#'>PowerSwitch</a>.",
+            "type": "opportunity"
+        })
+
+    # Broadband Check
+    if any(k in e.description.lower() for k in ['broadband', 'internet', 'wifi'] for e in expenses):
+         recommendations.append({
+            "title": "Broadband Deal",
+            "text": "Is your contract ending soon? You might be overpaying for broadband. <a href='#'>NetCompare</a> has deals from £25/mo.",
+            "type": "opportunity"
+        })
+
+    # Saving Check (Future Fund)
+    future_pct = (sum(e.amount for e in expenses if e.type == 'future') / total_spent_so_far) * 100 if total_spent_so_far > 0 else 0
+    if future_pct < 20:
+        recommendations.append({
+            "title": "Boost Your Savings",
+            "text": "You are currently saving less than the recommended 20%. Try automating a transfer to a high-yield savings account on payday.",
+            "type": "warning"
+        })
+
+    # Generic high spending
+    if monthly_income > 0 and (total_spent_so_far > monthly_income): # Comparing total spend vs 1 month income is tough without time window, simplified for now
+         recommendations.append({
+            "title": "High Expenditure Alert",
+            "text": "Your recorded expenses exceed your monthly income. Review your 'Fun' category for quick wins.",
+            "type": "alert"
+        })
+
+    return render_template('annual-performance.html',
+                           annual_income=annual_income,
+                           annual_expense=annual_expense,
+                           spending_by_month=spending_by_month,
+                           top_expenses=sorted_expenses,
+                           recommendations=recommendations)
 
 # Route to add new income (Handles both displaying form and processing submission)
 @app.route('/add-income', methods=['GET', 'POST'])
