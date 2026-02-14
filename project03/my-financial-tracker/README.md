@@ -36,14 +36,21 @@ Key features include:
 - Visual comparison of target versus actual spending
 - **Real-time budget health notifications** (warnings when overspending, success message when budget is balanced)
 - **Educational Home Page** with embedded video guide and clear instructions
+- **Financial Performance Dashboard**: Annualized view with spending trends and intelligent savings recommendations (Original feature).
 - Dashboard-style single-page overview
 
 This concept directly aligns with the assignment requirement to build a **functional, engaging, and visually appealing web application** using Flask.
+, Research & Inspiration
+Prior to development, research was conducted into personal finance dashboards and budgeting methodologies.
 
-### 1.2 Planning and Research
-Prior to development, research was conducted into:
-- Personal finance dashboards
-- Kanban-style task boards
+**Inspiration:**
+The core **50/30/20 framework** and the specific **interactive dashboard design** were inspired by the financial educator **Nischa** and her video guide on the topic (embedded on the Home page). The visual concept of separating expenses into three distinct buckets for immediate visual feedback is drawn directly from her advice.
+
+**Original Contributions:**
+While the dashboard follows this inspired structure, all other features are original implementations created for this project, including:
+- The **Financial Performance** dashboard logic and design.
+- The **smart recommendation system** suggesting savings on insurance and utilities.
+- The **backend logic** for annualized projections and health-check notifications.
 - Goal tracking interfaces
 
 This research influenced several design decisions, including:
