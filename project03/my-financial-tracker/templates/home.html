@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intentional Spending Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .home-container {
+            max-width: 800px;
+            margin: 50px auto;
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .home-btn {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        .home-btn:hover {
+            background-color: #45a049;
+            text-decoration: none;
+        }
+        .features {
+            text-align: left;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+        }
+        .features li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        .description {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body style="display: block; background-color: #f0f2f5;">
+
+    <div class="home-container">
+        <h1>Intentional Spending Tracker</h1>
+        
+        <p class="description">
+            The Intentional Spending Tracker is a personal finance web application built using Python and Flask, 
+            designed to help users better understand and control their spending by comparing 
+            <strong>intended spending goals</strong> against <strong>actual financial behaviour</strong>.
+        </p>
+
+        <div class="features">
+            <h3>How it works</h3>
+            <p>The application is based on an intentional budgeting framework where spending is categorised into:</p>
+            <ul>
+                <li><strong>Fixed (50%)</strong> – Essential and recurring expenses (e.g., rent, bills).</li>
+                <li><strong>Fun (30%)</strong> – Discretionary spending (e.g., entertainment, dining).</li>
+                <li><strong>Future (20%)</strong> – Savings, investments, and long-term planning.</li>
+            </ul>
+            
+            <h3>Directions</h3>
+            <p>To use the tracker:</p>
+            <ol>
+                <li>Click the button below to enter the Dashboard.</li>
+                <li>Record your <strong>Income</strong> sources.</li>
+                <li>Add your <strong>Expenses</strong> and assign them to one of the three categories.</li>
+                <li>View the automatic charts to compare your spending against the 50/30/20 goals.</li>
+            </ol>
+        </div>
+
+        <a href="{{ url_for('dashboard') }}" class="home-btn">Go to Dashboard</a>
+    </div>
+
+</body>
+</html>

@@ -11,7 +11,8 @@
     <nav><aside>
         <h2>My Financial Tracker</h2>
         <ul>
-            <li><a href="{{ url_for('index') }}" class="active">Dashboard</a></li>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('dashboard') }}" class="active">Dashboard</a></li>
             <li><a href="{{ url_for('add_income') }}">Add Income</a></li>
             <li><a href="{{ url_for('add_expense') }}">Add Expense</a></li>
     </aside></nav>

@@ -77,9 +77,14 @@ def calculate_monthly_income(income):
 
 # --- Routes ---
 
-# Home Route: Displays the dashboard
+# Home Route: Displays the landing page
 @app.route('/')
 def index():
+    return render_template('home.html')
+
+# Dashboard Route: Displays the dashboard
+@app.route('/dashboard')
+def dashboard():
     # Calculate totals for charts
     total_income = sum(calculate_monthly_income(i) for i in incomes)
     total_fixed = sum(e.amount for e in expenses if e.type == 'fixed')
@@ -116,7 +121,7 @@ def add_income():
             
             if new_income:
                 incomes.append(new_income)
-                return redirect(url_for('index'))
+                return redirect(url_for('dashboard'))
 
     return render_template('add-income.html')
 
@@ -140,7 +145,7 @@ def add_expense():
             
             if new_expense:
                 expenses.append(new_expense)
-                return redirect(url_for('index'))
+                return redirect(url_for('dashboard'))
             
     return render_template('add-expense.html')
 
