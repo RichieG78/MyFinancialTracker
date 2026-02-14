@@ -229,11 +229,20 @@ The project is managed using Git and hosted on GitHub:
 - Separation of concerns between backend and frontend assets
 
 ### 7.2 Render Deployment
-The application is deployed using **Render.com** and located here: https://myfinancialtracker.onrender.com, following the steps outlined in the assignment brief:
-- GitHub repository connected to Render
-- Web service created
-- Environment configured
-- Application successfully deployed
+The application is deployed using **Render.com** and is accessible here: [https://myfinancialtracker.onrender.com](https://myfinancialtracker.onrender.com).
+
+To deploy this application yourself:
+1.  **Create a Render Account:** Sign up at [render.com](https://render.com/).
+2.  **New Web Service:** Click "New +" and select "Web Service".
+3.  **Connect Repository:** Connect your GitHub account and select the `MyFinancialTracker` repository.
+4.  **Configure Settings:**
+    - **Runtime:** `Python 3`
+    - **Build Command:** `pip install -r requirements.txt`
+    - **Start Command:** `gunicorn app:app`
+5.  **Deploy:** Click "Create Web Service". Render will build the environment and launch the app.
+6.  **Access:** Once the deployment status is "Live", the application is available at the provided `.onrender.com` URL.
+
+> **Note on Performance:** This application is hosted on Render's **Free Tier**. The server will automatically "spin down" after 15 minutes of inactivity. If the site takes 50+ seconds to load effectively, it is simply "waking up" from this cold start. Subsequent interactions will be instant.
 
 The hosted version mirrors the local development version and is fully functional and publicly accessible.
 
